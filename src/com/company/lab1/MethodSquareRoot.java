@@ -30,7 +30,7 @@ public class MethodSquareRoot {
         double[][] D = new double[m][m];   //Описываем матрицу D
 
         S[1][1] = sqrt(abs(A[1][1]));
-        D[1][1] = sign(A[1][1]);
+        D[1][1] = signum(A[1][1]);
         for(int j = 2; j <= n; ++j) {
             S[1][j] = A[1][j] / (S[1][1] * D[1][1]);
         }
@@ -62,7 +62,7 @@ public class MethodSquareRoot {
         /*Выводим матрицу после прямого хода, чтобы проверить, что она была приведена
           к ступенчатому виду       */
 
-        Arrays.stream(A).parallel().forEach(doubles -> System.out.println(Arrays.toString(doubles)));
+        Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
 
         /*-------------------------------------Обратный ход-------------------------------------*/
         /*Обратный ход состоит в в последовательном решении двух систем уравнений
@@ -100,7 +100,8 @@ public class MethodSquareRoot {
 
     public static void main(String[] args) {
         MethodSquareRoot matrix = new MethodSquareRoot();
-        var A = ParseFileMatrix.parseMatrixFromFile(FilePaths.pathToMatrixFile);
+        var A = ParseFileMatrix.parseMatrixFromFile(FilePaths.pathToSquare);
+        Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
         matrix.methodSquareRoot(A, A.length - 1);
     }
 
