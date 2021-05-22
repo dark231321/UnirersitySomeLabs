@@ -1,6 +1,6 @@
 package com.company.lab0;
 
-import com.company.FilePaths;
+import com.company.util.FilePaths;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class TriangularMatrix {
 
     private double[][] parseMatrixFromFile(){
-        File file = new File(FilePaths.pathToTriangularMatrixFile);
+        File file = new File(FilePaths.pathToSquare);
         double[][] value = null;
         try {
             Scanner scanner = new Scanner(file);
