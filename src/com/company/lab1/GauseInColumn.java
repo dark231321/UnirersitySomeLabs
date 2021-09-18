@@ -44,15 +44,15 @@ public class GauseInColumn {
 
             q++;
 
-            System.out.println("Результат после шага Q - " + q);
-            Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
-
             double tmp;
             for (int i = l + 1; i <= n; i++) {
                 tmp = A[i][l] / A[l][l];
                 for (int j = m; j >= l; j--) //Считаем от последнего эл-та в строке, т.е. вектора b
                     A[i][j] -= tmp * A[l][j];
             }
+
+            System.out.println("Результат после шага Q - " + q);
+            Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
         }
         /*------------------------------------------Прямой ход----------------------------------------*/
 
@@ -77,6 +77,7 @@ public class GauseInColumn {
     public static void main(String[] args) {
         GauseInColumn gauseInColumn = new GauseInColumn();
         var A = ParseFileMatrix.parseMatrixFromFile(FilePaths.pathToMatrixFile);
+        Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
         System.out.println(Arrays.toString(gauseInColumn.gause(A, A.length - 1)));
     }
 }

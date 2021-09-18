@@ -29,6 +29,9 @@ public class MethodSquareRoot {
         double[][] S = new double[m][m];   //Описываем матрицу S
         double[][] D = new double[m][m];   //Описываем матрицу D
 
+        System.out.println("A:");
+        Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
+
         S[1][1] = sqrt(abs(A[1][1]));
         D[1][1] = signum(A[1][1]);
         for(int j = 2; j <= n; ++j) {
@@ -48,6 +51,7 @@ public class MethodSquareRoot {
                 sum = sum + S[l][i] * S[l][i] * D[l][l];
             S[i][i] = sqrt(abs(A[i][i] - sum));
             D[i][i] = sign(A[i][i] - sum);
+
             for (int j = i + 1; j <= n; ++j) {
                 sum = 0;
                 for (int l = 1; l <= i - 1; l++) {
@@ -62,7 +66,15 @@ public class MethodSquareRoot {
         /*Выводим матрицу после прямого хода, чтобы проверить, что она была приведена
           к ступенчатому виду       */
 
-        Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
+        System.out.println("Matrix: ---------------------------");
+        for (int i = 1; i < m; i ++) {
+            for (int j = 1; j < m; j++) {
+                System.out.print(S[i][j] + " ");
+            }
+            System.out.println();
+        }
+//        Arrays.stream(S).filter(e -> Arrays.stream(e).filter(k -> k!=0)).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
+        System.out.println("Matrix: ---------------------------");
 
         /*-------------------------------------Обратный ход-------------------------------------*/
         /*Обратный ход состоит в в последовательном решении двух систем уравнений
@@ -102,7 +114,7 @@ public class MethodSquareRoot {
         MethodSquareRoot matrix = new MethodSquareRoot();
         var A = ParseFileMatrix.parseMatrixFromFile(FilePaths.pathToSquare);
         Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
-        matrix.methodSquareRoot(A, A.length - 1);
+        Arrays.stream(matrix.methodSquareRoot(A, A.length - 1)).forEach(e -> System.out.print(e + " "));
     }
 
 }

@@ -51,7 +51,7 @@ public class MethodJacobi {
                 norm = abs(b[i]);
             }
         }
-        System.out.println("Residual: " + norm);
+//        System.out.println("Residual: " + norm);
         System.out.println(Arrays.toString(x));
         return x;
     }
@@ -61,7 +61,11 @@ public class MethodJacobi {
         System.out.println(matrixInfo);
         var methodJacobi = new MethodJacobi();
         double eps = 0.001;
-        methodJacobi.methodJacobi(matrixInfo, eps);
+        var x = methodJacobi.methodJacobi(matrixInfo, eps);
+        System.out.println("Ответ");
+        for (int i = 1; i < x.length; ++i)
+            System.out.println("x"+ i + "=" + x[i]);
+
     }
 
 }

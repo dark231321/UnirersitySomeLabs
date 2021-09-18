@@ -55,14 +55,19 @@ public class RelaxationMethod {
     }
 
     public static void main(String[] args) {
-        MatrixInfo matrixInfo = ParseFileMatrix.parseMatrixInfo(FilePaths.pathToJacobi);
+        MatrixInfo matrixInfo = ParseFileMatrix.parseMatrixInfo(FilePaths.pathToMatrixFile);
         System.out.println(matrixInfo);
         var relaxationMethod = new RelaxationMethod();
-        double eps = 0.001;
-        double omega = 0.001;
-        System.out.println(Arrays.toString(
-                relaxationMethod.relaxationMethod(matrixInfo, eps, omega)
-        ));
+        double eps = 0.00001;
+        double omega = 0.9;
+
+
+        var x= relaxationMethod.relaxationMethod(matrixInfo, eps, omega);
+
+        System.out.println("Ответ");
+        for (int i = 1; i < x.length; ++i)
+            System.out.println("x"+ i + "=" + x[i]);
+
     }
 
 }

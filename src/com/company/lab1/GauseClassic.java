@@ -25,11 +25,15 @@ public class GauseClassic {
         double[] x = new double[n+1];
         for (int k = 1; k < n; k++) {
             for (int i = k + 1; i <= n; i++) {
+                System.out.println("A[i][k]: " + A[i][k] + " A[k][k]: " + A[k][k] + " i: " + i + " k: " + k);
                 tmp = A[i][k]/A[k][k];
+                System.out.println("tmp: " + tmp);
                 for (int j = m; j >= k; j--) //Считаем от последнего эл-та в строке, т.е. базиса
                     A[i][j] -= tmp * A[k][j]; //
 
             }
+
+            Arrays.stream(A).forEach(doubles -> System.out.println(Arrays.toString(doubles)));
         }
 
         System.out.println("A after:");
