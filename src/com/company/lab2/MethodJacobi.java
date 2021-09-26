@@ -16,10 +16,15 @@ public class MethodJacobi {
         var b = matrixInfo.getB();
         var n = matrixInfo.getN();
 
-        double[] NextX = new double[n + 1];
+        double[] nextX = new double[n + 1];
         int k = 0;
         double norm = 0;
         do {
+            /**
+             * x[i] ^ 0  = b[i]/a[i][i]
+             * x[i]^(k+1) = 1/a[i][i] * (b[i] - sum(j = 1, n; j != n; a[i][j] * x[j]^k)
+             * i = 1,n; k = 0,inf
+             * */
             for (int i = 1; i <= n; ++i) {
                 double sum = 0;
                 for (int j = 1; j <= n; ++j) {
@@ -27,31 +32,20 @@ public class MethodJacobi {
                         sum = sum + A[i][j] * x[j];
                     }
                 }
-                NextX[i] = (b[i] - sum) / A[i][i];
+                nextX[i] = (b[i] - sum) / A[i][i];
             }
 
-            norm = abs(NextX[1] - x[1]);
+            norm = abs(nextX[1] - x[1]);
             for (int i = 1; i <= n; ++i) {
-                if (abs(NextX[i] - x[i]) > norm) {
-                    norm = abs(NextX[i] - x[i]);
+                if (abs(nextX[i] - x[i]) > norm) {
+                    norm = abs(nextX[i] - x[i]);
                 }
-                x[i] = NextX[i];
+                x[i] = nextX[i];
             }
             k++;
         } while (norm > eps);
 
         System.out.println("Iteration count: " + k + " \nEps: " + eps);
-
-        for (int i = 1; i <= n; ++i){
-            for (int j = 1; j <= n; ++j) {
-                b[i] = b[i] - A[i][j] * x[j];
-            }
-
-            if (norm < abs(b[i])) {
-                norm = abs(b[i]);
-            }
-        }
-//        System.out.println("Residual: " + norm);
         System.out.println(Arrays.toString(x));
         return x;
     }

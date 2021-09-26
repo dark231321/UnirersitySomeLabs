@@ -4,8 +4,6 @@ import com.company.util.FilePaths;
 import com.company.util.MatrixInfo;
 import com.company.util.ParseFileMatrix;
 
-import java.util.Arrays;
-
 import static java.lang.Math.abs;
 
 public class RelaxationMethod {
@@ -16,41 +14,35 @@ public class RelaxationMethod {
         var b = matrixInfo.getB();
         var n = matrixInfo.getN();
 
-
-        double[] NextX = new double[n + 1];
         int k = 0;
-        double norm;
+        double[] nextX = new double[n + 1];
+        double norm = 0;
         do {
-            norm=0;
+            /**
+             * x[i] ^ 0  = b[i]/a[i][i]
+             * x[i]^(k+1) = omega /a[i][i] * ((b[i] - sum(j = 1, n; j = i - 1; a[i][j] * x[j] ^ k + 1) - sum(j = i + 1; j = n; a[i][j] * x[j] ^ k + 1)) + (1 - omega) * x[i] ^ k
+             * */
             for (int i = 1; i <= n; ++i) {
-                double sum = 0;
-                for (int j = 2; j <= n; ++j) {
-                    if (i != j) {
-                        sum = sum + A[i][j] * x[j];
-                    }
+                double sum1 = 0, sum2 = 0;
+                for (var j = 1; j <= i-1; j++) {
+                    sum1 += A[i][j] * nextX[j];
                 }
-                double Next = (1-omega)*x[i] + omega*(b[i] - sum) / A[i][i];
-
-                if (abs(Next - x[i]) > norm) {
-                    norm = abs(Next - x[i]);
+                for (var j = i+1; j <= n; j++) {
+                    sum2 += A[i][j] * x[j];
                 }
-                x[i] = Next;
+                nextX[i] = omega*(b[i] - sum1 - sum2) / A[i][i] + (1-omega) * x[i] ;
+            }
+            norm = abs(nextX[1] - x[1]);
+            for (int i = 1; i <= n; ++i) {
+                if (abs(nextX[i] - x[i]) > norm) {
+                    norm = abs(nextX[i] - x[i]);
+                }
+                x[i] = nextX[i];
             }
             k++;
         } while (norm > eps);
 
         System.out.println("Iteration count: " + k + " \nEps: " + eps);
-        norm=0;
-
-        for (int i = 1; i <= n; ++i){
-            for (int j = 1; j <= n; ++j) {
-                b[i] = b[i] - A[i][j] * x[j];
-            }
-            if (norm < abs(b[i])) {
-                norm = abs(b[i]);
-            }
-        }
-        System.out.println("Residual= " + norm);
         return x;
     }
 
@@ -58,8 +50,14 @@ public class RelaxationMethod {
         MatrixInfo matrixInfo = ParseFileMatrix.parseMatrixInfo(FilePaths.pathToMatrixFile);
         System.out.println(matrixInfo);
         var relaxationMethod = new RelaxationMethod();
+
         double eps = 0.00001;
-        double omega = 0.9;
+        /**
+         * 0 < omega < 1 нижняя релаксация
+         * 1 < omega < 2 верхняя релаксация
+         * omega = 1 в точности метод Зейделя
+         * */
+        double omega = 0.5;
 
 
         var x= relaxationMethod.relaxationMethod(matrixInfo, eps, omega);
