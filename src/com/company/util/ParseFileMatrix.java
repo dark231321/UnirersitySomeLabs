@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class ParseFileMatrix {
 
-
     public static double[][] parseMatrixFromFile(String fileName){
         File file = new File(fileName);
         double[][] value = null;
@@ -24,7 +23,7 @@ public class ParseFileMatrix {
                 }
             }
             scanner.close();
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return value;
@@ -52,7 +51,7 @@ public class ParseFileMatrix {
             }
             scanner.close();
             return new MatrixInfo(A, x, b);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
             throw new IllegalArgumentException("Filepath doesn't exist" + fileName, e);
         }

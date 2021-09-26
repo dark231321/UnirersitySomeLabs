@@ -1,13 +1,5 @@
 package com.company.lab1;
 
-import com.company.util.FilePaths;
-import com.company.util.ParseFileMatrix;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Scanner;
-
 public class RunsMethod {
 
     public double[] runsMethod(double b, int n){
@@ -16,39 +8,39 @@ public class RunsMethod {
         double[] C = new double[n+1];
         double[] F = new double[n+1];
 
-        B[1] = b;
+        B[1] = 0;
         C[1] = 1;
         F[1] = 0;
         for(int i = 2; i <= n - 1; ++i){
             A[i] = -1;
-            C[i] = -2;
+            C[i] = -b;
             B[i] = -1;
             F[i] = (double)i / n;
         }
-        A[n] = -1;
-        C[n] = -1;
+        A[n] = 0;
+        C[n] = 1;
         F[n] = 1;
 
         System.out.print("A = ");
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= n; i++) {
             System.out.print(A[i] + " ");
         }
         System.out.println();
 
         System.out.print("B = ");
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= n; i++) {
             System.out.print(B[i] + " ");
         }
         System.out.println();
 
         System.out.print("C = ");
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= n; i++) {
             System.out.print(C[i] + " ");
         }
         System.out.println();
 
         System.out.print("F = ");
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= n; i++) {
             System.out.print(F[i] + " ");
         }
         System.out.println();
@@ -78,9 +70,11 @@ public class RunsMethod {
 
     public static void main(String[] args) {
         RunsMethod matrix = new RunsMethod();
-        var x = matrix.runsMethod(0.5, 3);
+        int b = 2;
+        int n = 4;
+        var x = matrix.runsMethod(b, n);
         System.out.print("x = ");
-        for (int i = 1; i < 4; i++) {
+        for (int i = 1; i <= n; i++) {
             System.out.print(x[i] + " ");
         }
     }

@@ -34,7 +34,7 @@ public final class MatrixInfo {
 
     @Override
     public String toString() {
-        return "JacobiResult{" +
+        return "Jacobi" +
                 "\nn=" + n +
                 "\nA:" + Arrays.stream(A)
                                  .reduce(new StringBuffer(""),
@@ -43,6 +43,6 @@ public final class MatrixInfo {
                                 .toString() +
                 "x:" + Arrays.toString(x) +
                 "\nb:" + Arrays.toString(b) +
-                "\n}";
+                "\n";
     }
 }
