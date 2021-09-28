@@ -10,11 +10,12 @@ import static java.lang.Math.abs;
 
 public class MethodJacobi {
 
-    private double[] methodJacobi(MatrixInfo matrixInfo, double eps){
+    private double[] methodJacobi(MatrixInfo matrixInfo){
         var A = matrixInfo.getA();
         var x = matrixInfo.getX();
         var b = matrixInfo.getB();
         var n = matrixInfo.getN();
+        var eps = matrixInfo.getEps();
 
         double[] nextX = new double[n + 1];
         int k = 0;
@@ -53,9 +54,7 @@ public class MethodJacobi {
     public static void main(String[] args) {
         MatrixInfo matrixInfo = ParseFileMatrix.parseMatrixInfo(FilePaths.pathToJacobi);
         System.out.println(matrixInfo);
-        var methodJacobi = new MethodJacobi();
-        double eps = 0.001;
-        var x = methodJacobi.methodJacobi(matrixInfo, eps);
+        var x = new MethodJacobi().methodJacobi(matrixInfo);
         System.out.println("Ответ");
         for (int i = 1; i < x.length; ++i)
             System.out.println("x"+ i + "=" + x[i]);

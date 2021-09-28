@@ -2,18 +2,24 @@ package com.company.util;
 
 import java.util.Arrays;
 
-public final class MatrixInfo {
+public class MatrixInfo {
     private final int n;
+    private final float eps;
     private final double[][] A;
     private final double[] x;
     private final double[] b;
 
 
-    public MatrixInfo(double[][] a, double[] x, double[] b) {
+    public MatrixInfo(float eps, double[][] a, double[] x, double[] b) {
+        this.eps = eps;
         A = a;
         this.x = x;
         this.b = b;
         n = a.length - 1;
+    }
+
+    public float getEps() {
+        return eps;
     }
 
     public int getN() {

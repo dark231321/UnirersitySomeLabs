@@ -1,18 +1,20 @@
 package com.company.lab2;
 
 import com.company.util.FilePaths;
-import com.company.util.MatrixInfo;
 import com.company.util.ParseFileMatrix;
+import com.company.util.RelaxationMatrixInfo;
 
 import static java.lang.Math.abs;
 
 public class RelaxationMethod {
 
-    private double[] relaxationMethod(MatrixInfo matrixInfo, double eps, double omega) {
+    private double[] relaxationMethod(RelaxationMatrixInfo matrixInfo) {
         var A = matrixInfo.getA();
         var x = matrixInfo.getX();
         var b = matrixInfo.getB();
         var n = matrixInfo.getN();
+        var eps = matrixInfo.getEps();
+        var omega = matrixInfo.getOmega();
 
         int k = 0;
         double[] nextX = new double[n + 1];
@@ -47,20 +49,14 @@ public class RelaxationMethod {
     }
 
     public static void main(String[] args) {
-        MatrixInfo matrixInfo = ParseFileMatrix.parseMatrixInfo(FilePaths.pathToMatrixFile);
+        RelaxationMatrixInfo matrixInfo = ParseFileMatrix.parseRelaxation(FilePaths.pathToMatrixFile);
         System.out.println(matrixInfo);
-        var relaxationMethod = new RelaxationMethod();
-
-        double eps = 0.00001;
         /**
          * 0 < omega < 1 нижняя релаксация
          * 1 < omega < 2 верхняя релаксация
          * omega = 1 в точности метод Зейделя
          * */
-        double omega = 0.5;
-
-
-        var x= relaxationMethod.relaxationMethod(matrixInfo, eps, omega);
+        var x= new RelaxationMethod().relaxationMethod(matrixInfo);
 
         System.out.println("Ответ");
         for (int i = 1; i < x.length; ++i)
